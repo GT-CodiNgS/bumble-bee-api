@@ -5,6 +5,7 @@ package com.icbt.bumblebeeapi.entity;
  * @since 2/2/2023
  */
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.icbt.bumblebeeapi.entity.enums.Gender;
 import com.icbt.bumblebeeapi.entity.enums.RoleType;
 
@@ -17,6 +18,7 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.annotations.TypeDef;
 import org.hibernate.annotations.TypeDefs;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -35,7 +37,7 @@ public class User implements SuperEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(columnDefinition = "INT")
-    private Long id;
+    private int id;
 
     @Column(columnDefinition = "VARCHAR(100)", nullable = false)
     private String userName;
@@ -55,10 +57,11 @@ public class User implements SuperEntity {
     @Column(columnDefinition = "VARCHAR(50)", nullable = false)
     private String contactNumber;
 
+    @JsonFormat(pattern="yyyy-MM-dd")
     @Column(columnDefinition = "DATETIME")
     private Date dateOfBirth;
 
-    @CreatedDate
+    @JsonFormat(pattern="yyyy-MM-dd")
     @Column(columnDefinition = "DATETIME")
     private Date createdDate;
 
@@ -75,7 +78,7 @@ public class User implements SuperEntity {
     @NotNull(message = "roleType is mandatory")
     private RoleType roleType;
 
-    @Column(columnDefinition = "VARCHAR(MAX)")
+    @Column(columnDefinition = "VARCHAR(750)")
     private String address;
 
     @Enumerated(EnumType.STRING)

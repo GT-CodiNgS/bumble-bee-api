@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 public class StandardResponse {
-    private String code;
+    private int code;
     private String message;
     private Object data;
 }
