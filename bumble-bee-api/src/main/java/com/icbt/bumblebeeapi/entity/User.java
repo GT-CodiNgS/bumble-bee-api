@@ -15,12 +15,15 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import javax.validation.constraints.NotNull;
+
+import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
 import org.hibernate.annotations.TypeDefs;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.format.annotation.DateTimeFormat;
+
 
 import javax.persistence.*;
+import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
 
 @TypeDefs({
@@ -57,7 +60,7 @@ public class User implements SuperEntity {
     @Column(columnDefinition = "VARCHAR(50)", nullable = false)
     private String contactNumber;
 
-    @JsonFormat(pattern="yyyy-MM-dd")
+    @Temporal(TemporalType.DATE)
     @Column(columnDefinition = "DATETIME")
     private Date dateOfBirth;
 
@@ -78,11 +81,14 @@ public class User implements SuperEntity {
     @NotNull(message = "roleType is mandatory")
     private RoleType roleType;
 
-    @Column(columnDefinition = "VARCHAR(750)")
-    private String address;
+    @Type(type = "json")
+    @Column(columnDefinition = "json")
+    private ArrayList address;
 
     @Enumerated(EnumType.STRING)
     @NotNull(message = "gender is mandatory")
     private Gender gender;
+
+    private BigDecimal amount;
 
 }

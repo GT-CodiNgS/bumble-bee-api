@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
 
 /**
@@ -17,7 +19,7 @@ import java.util.Date;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserDTO {
+public class UserDTO implements SuperDTO{
     private int id;
     private String userName;
     private String email;
@@ -31,6 +33,7 @@ public class UserDTO {
     private String modifiedBy;
     private int isDeleted;
     private RoleType roleType;
-    private String address;
+    private ArrayList address;
     private Gender gender;
+    private BigDecimal amount;
 }

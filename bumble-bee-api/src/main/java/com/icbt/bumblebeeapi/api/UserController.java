@@ -6,6 +6,8 @@ package com.icbt.bumblebeeapi.api;
  */
 
 import com.icbt.bumblebeeapi.dto.UserDTO;
+import com.icbt.bumblebeeapi.entity.enums.Gender;
+import com.icbt.bumblebeeapi.entity.enums.Type;
 import com.icbt.bumblebeeapi.service.UserService;
 import com.icbt.bumblebeeapi.util.StandardResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +15,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 
 @RestController
@@ -27,5 +31,11 @@ public class UserController {
         System.out.println(dto.toString());
         String userName = userService.SaveUser(dto);
         return new ResponseEntity(new StandardResponse(201, userName + ": Success added", true), HttpStatus.CREATED);
+    }
+
+    @GetMapping(path = "/{searchBy}/{value}")
+    public ResponseEntity Search(@PathVariable("searchBy") Type searchBy, @PathVariable("value") String value) throws Exception {
+        return new ResponseEntity(new StandardResponse(200, "Done", userService.searchUser(searchBy, value)), HttpStatus.OK);
+
     }
 }
