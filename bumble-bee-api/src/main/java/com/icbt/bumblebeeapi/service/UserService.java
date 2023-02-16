@@ -13,6 +13,6 @@ import java.util.List;
  */
 public interface UserService {
 
-    String SaveUser(UserDTO dto);
-    List<UserDTO> searchUser(Type searchBy, String value) throws Exception;
+    String save(UserDTO dto);
+    List<UserDTO> search(Type searchBy, String value) throws Exception;
 }

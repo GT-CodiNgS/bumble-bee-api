@@ -39,7 +39,7 @@ public class UserServiceImpl implements UserService {
     QueryFactory queryFactory;
 
     @Override
-    public String SaveUser(UserDTO dto) {
+    public String save(UserDTO dto) {
 
         if (!userRepo.existsByNicNumber(dto.getNicNumber())) {
             dto.setCreatedDate(new Date());
@@ -51,7 +51,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<UserDTO> searchUser(Type searchBy, String value) throws Exception {
+    public List<UserDTO> search(Type searchBy, String value) throws Exception {
 
 //        try {
             List<User> users = queryFactory.GenerateSearchQuery(searchBy, value);

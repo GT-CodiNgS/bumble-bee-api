@@ -29,13 +29,13 @@ public class UserController {
     @PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE,}, produces = {MediaType.APPLICATION_JSON_VALUE,})
     public ResponseEntity<StandardResponse> saveUser(@RequestBody UserDTO dto) {
         System.out.println(dto.toString());
-        String userName = userService.SaveUser(dto);
+        String userName = userService.save(dto);
         return new ResponseEntity(new StandardResponse(201, userName + ": Success added", true), HttpStatus.CREATED);
     }
 
     @GetMapping(path = "/{searchBy}/{value}")
     public ResponseEntity Search(@PathVariable("searchBy") Type searchBy, @PathVariable("value") String value) throws Exception {
-        return new ResponseEntity(new StandardResponse(200, "Done", userService.searchUser(searchBy, value)), HttpStatus.OK);
+        return new ResponseEntity(new StandardResponse(200, "Done", userService.search(searchBy, value)), HttpStatus.OK);
 
     }
 }
