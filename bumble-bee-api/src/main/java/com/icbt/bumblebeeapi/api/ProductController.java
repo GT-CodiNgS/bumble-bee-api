@@ -23,7 +23,6 @@ public class ProductController {
 
     @PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE,}, produces = {MediaType.APPLICATION_JSON_VALUE,})
     public ResponseEntity<StandardResponse> saveProduct(@RequestBody ProductDTO dto) {
-        System.out.println(dto.toString()+"DTO");
         String name = service.save(dto);
         return new ResponseEntity(new StandardResponse(201, name + ": Success added", true), HttpStatus.CREATED);
     }

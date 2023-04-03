@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
+
 /**
  * @author Gayas Thasmika <gayasthasmika.w@gmail.com>
  * @projectname bumble-bee-api
@@ -17,5 +19,8 @@ public class ProductDTO implements SuperDTO {
     private int pId;
     private String name;
     private int isDeleted;
+    private Date createdDate;
+    private Date modifiedDate;
+    private String modifiedBy;
     private Category cid;
 }

@@ -1,16 +1,16 @@
 package com.icbt.bumblebeeapi.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.vladmihalcea.hibernate.type.json.JsonType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
-import org.hibernate.annotations.TypeDef;
-import org.hibernate.annotations.TypeDefs;
+import org.hibernate.annotations.*;
 
 import javax.persistence.*;
+import javax.persistence.Entity;
+import java.util.Date;
 
 /**
  * @author Gayas Thasmika <gayasthasmika.w@gmail.com>
@@ -35,8 +35,19 @@ public class Product implements SuperEntity {
     private String name;
     @Column(columnDefinition = "INT default '0'")
     private int isDeleted;
+
+    @CreationTimestamp
+    @Column(columnDefinition = "DATETIME")
+    private Date createdDate;
+
+    @Column(columnDefinition = "DATETIME")
+    private Date modifiedDate;
+
+    @Column(columnDefinition = "VARCHAR(100)")
+    private String modifiedBy;
+
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "cid", referencedColumnName = "cid")
-    @OnDelete(action = OnDeleteAction.CASCADE)
+//    @OnDelete(action = OnDeleteAction.CASCADE)
     private Category cid;
 }

@@ -81,14 +81,18 @@ public class User implements SuperEntity {
     @NotNull(message = "roleType is mandatory")
     private RoleType roleType;
 
-    @Type(type = "json")
-    @Column(columnDefinition = "json")
-    private ArrayList address;
+    @Column(columnDefinition = "VARCHAR(100)")
+    private String address;
 
     @Enumerated(EnumType.STRING)
     @NotNull(message = "gender is mandatory")
     private Gender gender;
 
     private BigDecimal amount;
+
+    @Column(columnDefinition = "VARCHAR(64)")
+    private String verificationCode;
+
+    private boolean enabled;
 
 }

@@ -1,9 +1,11 @@
 package com.icbt.bumblebeeapi.service;
 
 import com.icbt.bumblebeeapi.dto.UserDTO;
-import com.icbt.bumblebeeapi.entity.enums.Gender;
+import com.icbt.bumblebeeapi.entity.User;
 import com.icbt.bumblebeeapi.entity.enums.Type;
 
+import javax.mail.MessagingException;
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 /**
@@ -13,6 +15,9 @@ import java.util.List;
  */
 public interface UserService {
 
-    String save(UserDTO dto);
+    UserDTO save(UserDTO dto,String siteURL) throws MessagingException, UnsupportedEncodingException;
     List<UserDTO> search(Type searchBy, String value) throws Exception;
+    public void sendVerificationEmail(User user, String siteURL) throws UnsupportedEncodingException, MessagingException;
+    public boolean verify(String verificationCode);
+
 }

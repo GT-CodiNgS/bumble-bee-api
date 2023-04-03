@@ -92,7 +92,10 @@
 			<version>2.0.1</version>
 		</dependency>
 		<!-- Thanks for using https://jar-download.com -->
-
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-mail</artifactId>
+		</dependency>
 		<dependency>
 			<groupId>org.mapstruct</groupId>
 			<artifactId>mapstruct-processor</artifactId>

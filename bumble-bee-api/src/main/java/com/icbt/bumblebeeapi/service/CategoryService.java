@@ -1,8 +1,6 @@
 package com.icbt.bumblebeeapi.service;
 
 import com.icbt.bumblebeeapi.dto.CategoryDTO;
-import com.icbt.bumblebeeapi.dto.ProductDTO;
-import com.icbt.bumblebeeapi.entity.Category;
 
 import java.util.List;
 

@@ -9,13 +9,19 @@ import com.icbt.bumblebeeapi.repo.UserRepo;
 import com.icbt.bumblebeeapi.repo.queryFactory.QueryFactory;
 import com.icbt.bumblebeeapi.service.UserService;
 import com.icbt.bumblebeeapi.util.mapper.UserMapper;
+import net.bytebuddy.utility.RandomString;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -34,17 +40,20 @@ public class UserServiceImpl implements UserService {
     ModelMapper modelMapper;
     @Autowired
     UserMapper userMapper;
-
+    @Autowired
+    private JavaMailSender mailSender;
     @Autowired
     QueryFactory queryFactory;
 
     @Override
-    public String save(UserDTO dto) {
+    public UserDTO save(UserDTO dto,String siteURL) throws MessagingException, UnsupportedEncodingException {
 
         if (!userRepo.existsByNicNumber(dto.getNicNumber())) {
             dto.setCreatedDate(new Date());
+            dto.setVerificationCode(RandomString.make(64));
             User user = userRepo.save(userMapper.toUser(dto));
-            return user.getUserName();
+            sendVerificationEmail(user, siteURL);
+            return modelMapper.map(user,UserDTO.class);
         }
         throw new ValidateException("User is already exists with this NIC number");
 
@@ -65,4 +74,50 @@ public class UserServiceImpl implements UserService {
 //        }
 
     }
+
+    @Override
+        public void sendVerificationEmail(User user, String siteURL)
+            throws UnsupportedEncodingException, MessagingException{
+            String toAddress = user.getEmail();
+            String fromAddress = "gayasthasmika.w1@gmail.com";
+            String senderName = "gayasthasmika";
+            String subject = "Please verify your registration";
+            String content = "Dear [[name]],<br>"
+                    + "Please click the link below to verify your registration:<br>"
+                    + "<h3><a href=\"[[URL]]\" target=\"_self\">VERIFY</a></h3>"
+                    + "Thank you,<br>"
+                    + "Your company name.";
+
+            MimeMessage message = mailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message);
+
+            helper.setFrom(fromAddress, senderName);
+            helper.setTo(toAddress);
+            helper.setSubject(subject);
+
+            content = content.replace("[[name]]", user.getUserName());
+            String verifyURL = siteURL + "/verify?code=" + user.getVerificationCode();
+            content = content.replace("[[URL]]", verifyURL);
+
+            helper.setText(content, true);
+
+            mailSender.send(message);
+
+        }
+    @Override
+    public boolean verify(String verificationCode) {
+        User user = userRepo.findByVerificationCode(verificationCode);
+
+        if (user == null || user.isEnabled()) {
+            return false;
+        } else {
+            user.setVerificationCode(null);
+            user.setEnabled(true);
+            userRepo.save(user);
+
+            return true;
+        }
+
+    }
+
 }

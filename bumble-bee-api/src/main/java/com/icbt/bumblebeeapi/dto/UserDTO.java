@@ -33,7 +33,9 @@ public class UserDTO implements SuperDTO{
     private String modifiedBy;
     private int isDeleted;
     private RoleType roleType;
-    private ArrayList address;
+    private String address;
     private Gender gender;
     private BigDecimal amount;
+    private String verificationCode;
+    private boolean enabled;
 }

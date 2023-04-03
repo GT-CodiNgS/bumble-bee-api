@@ -53,5 +53,7 @@ public interface UserRepo extends JpaRepository<User, Integer> {
             , nativeQuery = true)
     List<User> findByAny(String user_name, String email, String first_name, String last_name);
 
+    @Query("SELECT u FROM User u WHERE u.verificationCode = ?1")
+    public User findByVerificationCode(String code);
 
 }

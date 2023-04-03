@@ -1,5 +1,6 @@
 package com.icbt.bumblebeeapi.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.vladmihalcea.hibernate.type.json.JsonType;
 import lombok.AllArgsConstructor;
@@ -7,11 +8,13 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.TypeDef;
 import org.hibernate.annotations.TypeDefs;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -39,7 +42,18 @@ public class Category implements SuperEntity {
 
     @Column(columnDefinition = "INT default '0'")
     private int isDelete;
+
+    @CreationTimestamp
+    @Column(columnDefinition = "DATETIME")
+    private Date createdDate;
+
+    @Column(columnDefinition = "DATETIME")
+    private Date modifiedDate;
+
+    @Column(columnDefinition = "VARCHAR(100)")
+    private String modifiedBy;
+
     @JsonIgnore
-    @OneToMany(mappedBy = "pId", cascade = {CascadeType.ALL})
+    @OneToMany(mappedBy = "pId" /*cascade = {CascadeType.DETACH}*/)
     private List<Product> product = new ArrayList<>();
 }
