@@ -1,15 +1,18 @@
 package com.icbt.bumblebeeapi.service.impl;
 
 import com.icbt.bumblebeeapi.dto.CategoryDTO;
+import com.icbt.bumblebeeapi.dto.ProductDTO;
 import com.icbt.bumblebeeapi.entity.Category;
 import com.icbt.bumblebeeapi.exception.ValidateException;
 import com.icbt.bumblebeeapi.repo.CategoryRepo;
 import com.icbt.bumblebeeapi.service.CategoryService;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -53,6 +56,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public List<CategoryDTO> searchAll() {
-        return null;
+        List<Category> categoryList = repo.findAll();
+        return mapper.map(categoryList, new TypeToken<ArrayList<CategoryDTO>>() {}.getType());
     }
 }

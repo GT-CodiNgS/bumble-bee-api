@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import java.io.UnsupportedEncodingException;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/user")
@@ -43,8 +44,14 @@ public class UserController {
         return new ResponseEntity(new StandardResponse(200, "Done", userService.search(searchBy, value)), HttpStatus.OK);
 
     }
+    @GetMapping("/")
+    public ResponseEntity<StandardResponse> getAllCustomers(){
+        List<UserDTO> allCustomers = userService.getAllCustomers();
+        return new ResponseEntity(new StandardResponse(200, "Done", allCustomers), HttpStatus.OK);
+    }
     @GetMapping("/verify")
     public String verifyUser(@Param("code") String code) {
+
         if (userService.verify(code)) {
             return "verify_success";
         } else {

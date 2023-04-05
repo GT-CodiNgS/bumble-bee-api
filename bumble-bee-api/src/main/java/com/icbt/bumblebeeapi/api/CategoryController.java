@@ -10,6 +10,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 /**
  * @author Gayas Thasmika <gayasthasmika.w@gmail.com>
  * @projectname bumble-bee-api
@@ -28,4 +30,14 @@ public class CategoryController {
         String name = service.save(dto);
         return new ResponseEntity(new StandardResponse(201, name + ": Success added", true), HttpStatus.CREATED);
     }
+
+    @GetMapping("/")
+    public ResponseEntity<StandardResponse> getAllCategory(){
+
+        List<CategoryDTO> categoryDTOS = service.searchAll();
+        return new ResponseEntity(new StandardResponse(200, ": Success", categoryDTOS), HttpStatus.OK);
+
+    }
+
+
 }

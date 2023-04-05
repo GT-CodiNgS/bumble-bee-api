@@ -20,4 +20,5 @@ public interface UserService {
     public void sendVerificationEmail(User user, String siteURL) throws UnsupportedEncodingException, MessagingException;
     public boolean verify(String verificationCode);
 
+    public List<UserDTO>  getAllCustomers();
 }

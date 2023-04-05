@@ -86,7 +86,7 @@ public class UserServiceImpl implements UserService {
                     + "Please click the link below to verify your registration:<br>"
                     + "<h3><a href=\"[[URL]]\" target=\"_self\">VERIFY</a></h3>"
                     + "Thank you,<br>"
-                    + "Your company name.";
+                    + "Bumble Bee.";
 
             MimeMessage message = mailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(message);
@@ -95,7 +95,7 @@ public class UserServiceImpl implements UserService {
             helper.setTo(toAddress);
             helper.setSubject(subject);
 
-            content = content.replace("[[name]]", user.getUserName());
+            content = content.replace("[[name]]", user.getFirstName());
             String verifyURL = siteURL + "/verify?code=" + user.getVerificationCode();
             content = content.replace("[[URL]]", verifyURL);
 
@@ -104,6 +104,8 @@ public class UserServiceImpl implements UserService {
             mailSender.send(message);
 
         }
+
+
     @Override
     public boolean verify(String verificationCode) {
         User user = userRepo.findByVerificationCode(verificationCode);
@@ -117,6 +119,18 @@ public class UserServiceImpl implements UserService {
 
             return true;
         }
+
+    }
+
+    @Override
+    public List<UserDTO> getAllCustomers() {
+
+        List<User> userList = userRepo.findAll();
+        if (!userList.isEmpty()) {
+            return modelMapper.map(userList, new TypeToken<ArrayList<UserDTO>>() {
+            }.getType());
+        }
+        return null;
 
     }
 

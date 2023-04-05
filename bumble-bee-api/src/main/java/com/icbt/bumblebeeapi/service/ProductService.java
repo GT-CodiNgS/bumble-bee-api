@@ -17,4 +17,6 @@ public interface ProductService {
     Boolean update(int id);
     Boolean delete(int id);
     List<ProductDTO> searchAll();
+
+
 }

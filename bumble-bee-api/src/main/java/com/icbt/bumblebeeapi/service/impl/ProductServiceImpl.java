@@ -2,16 +2,19 @@ package com.icbt.bumblebeeapi.service.impl;
 
 import com.icbt.bumblebeeapi.dto.CategoryDTO;
 import com.icbt.bumblebeeapi.dto.ProductDTO;
+import com.icbt.bumblebeeapi.dto.UserDTO;
 import com.icbt.bumblebeeapi.entity.Category;
 import com.icbt.bumblebeeapi.entity.Product;
 import com.icbt.bumblebeeapi.exception.ValidateException;
 import com.icbt.bumblebeeapi.repo.ProductRepo;
 import com.icbt.bumblebeeapi.service.ProductService;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -55,6 +58,9 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<ProductDTO> searchAll() {
-        return null;
+        System.out.println("servie");
+        List<Product> productList = repo.findAll();
+        System.out.println("productList = " + productList);
+        return mapper.map(productList, new TypeToken<ArrayList<ProductDTO>>() {}.getType());
     }
 }

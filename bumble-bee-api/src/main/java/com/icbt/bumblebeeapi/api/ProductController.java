@@ -9,6 +9,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 /**
  * @author Gayas Thasmika <gayasthasmika.w@gmail.com>
  * @projectname bumble-bee-api
@@ -25,5 +27,12 @@ public class ProductController {
     public ResponseEntity<StandardResponse> saveProduct(@RequestBody ProductDTO dto) {
         String name = service.save(dto);
         return new ResponseEntity(new StandardResponse(201, name + ": Success added", true), HttpStatus.CREATED);
+    }
+    @GetMapping("/")
+    public ResponseEntity<StandardResponse> getAllProducts(){
+        System.out.println("Hii");
+        List<ProductDTO> productDTOS = service.searchAll();
+        System.out.println("productDTOS = " + productDTOS);
+        return new ResponseEntity(new StandardResponse(200, ": Success", productDTOS), HttpStatus.OK);
     }
 }
