@@ -54,6 +54,6 @@ public class Category implements SuperEntity {
     private String modifiedBy;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "pId" /*cascade = {CascadeType.DETACH}*/)
+    @OneToMany(mappedBy = "pId", cascade = {CascadeType.DETACH})
     private List<Product> product = new ArrayList<>();
 }

@@ -46,8 +46,8 @@ public class Product implements SuperEntity {
     @Column(columnDefinition = "VARCHAR(100)")
     private String modifiedBy;
 
-    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+    @ManyToOne()
     @JoinColumn(name = "cid", referencedColumnName = "cid")
-//    @OnDelete(action = OnDeleteAction.CASCADE)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Category cid;
 }
