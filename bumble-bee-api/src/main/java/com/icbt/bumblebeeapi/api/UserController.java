@@ -44,6 +44,12 @@ public class UserController {
         return new ResponseEntity(new StandardResponse(200, "Done", userService.search(searchBy, value)), HttpStatus.OK);
 
     }
+    @DeleteMapping(path = "{id}")
+    public ResponseEntity Delete(@PathVariable("id") int id){
+        userService.Delete(id);
+        return new ResponseEntity(new StandardResponse(200, "Done", true), HttpStatus.OK);
+
+    }
     @GetMapping("/")
     public ResponseEntity<StandardResponse> getAllCustomers(){
         List<UserDTO> allCustomers = userService.getAllCustomers();

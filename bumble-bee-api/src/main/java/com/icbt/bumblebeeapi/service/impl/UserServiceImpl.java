@@ -33,7 +33,7 @@ import java.util.List;
  */
 @Service
 @Transactional
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl implements UserService  {
     @Autowired
     UserRepo userRepo;
     @Autowired
@@ -131,6 +131,15 @@ public class UserServiceImpl implements UserService {
             }.getType());
         }
         return null;
+
+    }
+
+    @Override
+    public boolean Delete(int id) {
+        if (!userRepo.existsById(id)) {
+          return true;
+        }
+        throw new ValidateException("User is already exists with this NIC number");
 
     }
 
