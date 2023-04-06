@@ -21,4 +21,6 @@ public interface UserService {
     public boolean verify(String verificationCode);
 
     public List<UserDTO>  getAllCustomers();
+
+    public boolean Delete(int id);
 }
